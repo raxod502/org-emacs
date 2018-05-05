@@ -1,0 +1,10 @@
+(("dash.el" . "a74f4cfcdc8d0642a9f602ad494f0354f27dacc9")
+ ("epkgs" . "5bc01aa3b8fb1597482dbba2fcdcb539c1b92d3d")
+ ("f.el" . "de6d4d40ddc844eee643e92d47b9d6a63fbebb48")
+ ("git.el" . "a3396a7027a7d986598c6a2d6d5599bac918f3da")
+ ("melpa" . "c59e828d4cad3d75344b34b9666349250e53b6ea")
+ ("org" . "e8a4f39e7305b2a2aeff132adec1fe02fd5a31d3")
+ ("s.el" . "03410e6a7a2b11e47e1fea3b7d9899c7df26435e")
+ ("straight.el" . "9e136a7b72b8487a4d70d226fe9743b29a2dda27")
+ ("use-package" . "0a2b82a508e27c28625487dc0a03a854fcb7e4b7"))
+:jupiter
