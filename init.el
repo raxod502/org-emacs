@@ -75,18 +75,18 @@ Inserted by installing org-mode or when a release is made."
 
 (setq my-todo-file "~/Desktop/todo.org")
 
+;; We will also want to set up some keybindings. While it is not hard
+;; to do this right out of the box, there is a nice library called
+;; `bind-key' which makes it easier.
+
+(straight-use-package 'bind-key)
+
 ;; We make a convenient function for accessing your todo list.
 
 (defun my-goto-todo-file ()
   "Go to `my-todo-file'."
   (interactive)
   (find-file my-todo-file))
-
-;; We will also want to set up some keybindings. While it is not hard
-;; to do this right out of the box, there is a nice library called
-;; `bind-key' which makes it easier.
-
-(straight-use-package 'bind-key)
 
 ;; You can call the `my-goto-todo-file' function with M-x
 ;; my-goto-todo-file. But it is faster to use C-c t, so let's do that
