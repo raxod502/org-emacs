@@ -40,7 +40,7 @@ Change directory (you can give a name listed by `ls -lA`, the symbol
     $ pwd
     /Users/raxod502
 
-Install Emacs:
+Install Emacs (on macOS):
 
     $ brew install emacs --devel --with-cocoa
 
