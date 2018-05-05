@@ -85,6 +85,10 @@ Quit:
 
     C-x C-c
 
+Cancel command or key sequence in progress:
+
+    C-g
+
 Edit a file in the current window (type in the path name, and press
 `RET`; note that you can press `TAB` to get help from Emacs with
 this):
