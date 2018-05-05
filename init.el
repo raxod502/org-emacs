@@ -168,3 +168,11 @@ top-level heading."
 
 (setq org-clock-persist t)
 (org-clock-persistence-insinuate)
+
+;; Magit, the magical version-control frontend.
+
+(straight-use-package 'magit)
+
+;; Convenient keybinding for accessing Magit.
+
+(bind-key "C-x g" 'magit-status)
