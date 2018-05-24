@@ -1,14 +1,5 @@
-;; Emacs on macOS has a bug which prevents it from making secure
-;; network connections, which are required in order to install
-;; packages. We can work around that by following the instructions at
-;; https://emacs.stackexchange.com/a/18070/12534, which give us the
-;; following code:
-
-(unless (file-exists-p "/usr/local/etc/libressl/cert.pem")
-  (error "You should run 'brew install libressl' first"))
-
-(with-eval-after-load 'gnutls
-  (add-to-list 'gnutls-trustfiles "/usr/local/etc/libressl/cert.pem"))
+(unless (executable-find "gnutls-cli")
+  (error "You should run 'brew install gnutls' first"))
 
 ;; I may be biased here but I prefer to use the package manager I
 ;; wrote (called straight.el) rather than the one that comes with
