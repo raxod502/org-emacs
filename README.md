@@ -488,6 +488,14 @@ And one day later:
 
     S-<right>
 
+Edit tags for the current heading:
+
+    C-c C-q
+
+Set the priority for a TODO item:
+
+    C-c ,
+
 ## Org capture usage
 
 Capture a TODO item:

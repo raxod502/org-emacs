@@ -1,5 +1,5 @@
-(unless (executable-find "gnutls-cli")
-  (error "You should run 'brew install gnutls' first"))
+(unless (gnutls-available-p)
+  (error "Emacs wasn't installed with networking support!"))
 
 ;; I may be biased here but I prefer to use the package manager I
 ;; wrote (called straight.el) rather than the one that comes with
@@ -64,7 +64,7 @@ Inserted by installing org-mode or when a release is made."
 ;; Customize to taste. (This is not a special Org variable, but rather
 ;; just a variable we are defining for future use.)
 
-(setq my-todo-file "~/Desktop/todo.org")
+(setq my-todo-file "~/todo.org")
 
 ;; We will also want to set up some keybindings. While it is not hard
 ;; to do this right out of the box, there is a nice library called
@@ -75,7 +75,7 @@ Inserted by installing org-mode or when a release is made."
 ;; We make a convenient function for accessing your todo list.
 
 (defun my-goto-todo-file ()
-  "Go to `my-todo-file'."
+  "Edit `my-todo-file' in the current window."
   (interactive)
   (find-file my-todo-file))
 
@@ -114,7 +114,9 @@ Inserted by installing org-mode or when a release is made."
 
 (add-hook 'org-mode-hook 'org-indent-mode)
 
-;; Tell the agenda view to display your todo list.
+;; Tell the agenda view to display your todo list. (The
+;; `org-agenda-files' variable contains a list of files from which
+;; TODO entries are taken to display.)
 
 (setq org-agenda-files (list my-todo-file))
 
@@ -127,31 +129,30 @@ Inserted by installing org-mode or when a release is made."
 
 (setq org-agenda-skip-deadline-prewarning-if-scheduled t)
 
-;; A convenience function for making Org capture templates.
+;; This is some neat code that allows you to capture a TODO item to
+;; any heading in the Org file which is tagged with :refile:. If you
+;; to add additional capture targets, you can customize the setting of
+;; `org-capture-templates' below.
 
-(defun my-org-capture (keys name heading &rest subheadings)
-  "Make an Org capture template.
-KEYS is the key sequence to trigger the template, a
-string. (Remember that if you want to use a multi-key sequence,
-you also have to add another entry to the template list defining
-the sub-menu triggered by pressing the first key.)
+(setq org-refile-targets
+      `((,my-todo-file . (:tag . "refile"))))
 
-NAME is the text that will be displayed in the capture popup.
-
-HEADING is the top-level heading that the capture template will
-insert into.
-
-SUBHEADINGS, which are optional, are subheadings under the
-top-level heading."
-  `(,keys ,name entry (file+olp ,my-todo-file ,heading ,@subheadings) "* TODO %?"))
-
-;; These are shortcuts for using Org capture.
+(defun my-org-make-capture-template ()
+  (format "* %s %%?"
+          (completing-read
+           "Item type: "
+           (with-current-buffer (find-file-noselect my-todo-file)
+             org-todo-keywords-1))))
 
 (setq org-capture-templates
-      (list
-       (my-org-capture "e" "An example template" "Heading" "Subheading")
-       (list "p" "A prefix key")
-       (my-org-capture "pe" "An example with a prefix key" "Just a heading")))
+      `(("c" "Capture" entry
+         (file+function
+          ,my-todo-file
+          (lambda ()
+            (goto-char
+             (nth 3 (org-refile-get-location "Capture to")))))
+         (function my-org-make-capture-template)
+         :unnarrowed t)))
 
 ;; If you close Emacs while a clock is running, then the next time you
 ;; open an Org file, ask if the clock should be resumed (instead of
@@ -167,3 +168,26 @@ top-level heading."
 ;; Convenient keybinding for accessing Magit.
 
 (bind-key "C-x g" 'magit-status)
+
+;; A nice color theme. You can change this to a different color theme
+;; if you don't like it. To test out another color theme, first run
+;; M-x disable-theme to turn off this one, and then run M-x load-theme
+;; to turn on a different one. Emacs comes with some color themes, but
+;; you can install more by finding them online and then installing
+;; then using M-x straight-use-package.
+
+(straight-use-package 'zerodark-theme)
+(load-theme 'zerodark 'no-confirm)
+
+;; Make it easier to select from a list of options, for example when
+;; you're selecting a file to edit or a heading under which to capture
+;; a TODO item.
+
+(straight-use-package 'ivy)
+(ivy-mode +1)
+
+(straight-use-package 'counsel)
+(counsel-mode +1)
+
+(straight-use-package 'ivy-prescient)
+(ivy-prescient-mode +1)
