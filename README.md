@@ -61,7 +61,7 @@ If not (i.e. the command above didn't show the path to a program),
 install it by running the command on [their website][homebrew]. Then,
 you can install Emacs:
 
-    $ brew install emacs --devel --with-cocoa --with-gnutls
+    $ brew install emacs --devel --with-cocoa
 
 You can then ask the shell to refresh its database of program
 locations, which is necessary if you had previously run the `emacs` in
