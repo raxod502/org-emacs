@@ -427,6 +427,14 @@ TODO item states):
 
     C-c C-t
 
+Move forward through TODO states:
+
+    S-<right>
+
+Move backward through TODO states:
+
+    S-<left>
+
 Insert a new header:
 
     M-RET
